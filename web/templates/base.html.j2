@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}AlgoWiki{% endblock %}</title>
+    <link rel="stylesheet" href="{{ base_path }}/assets/css/dark.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-project-diagram"></i>
+                </div>
+                <h1>Algo<span>Wiki</span></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="{{ base_path }}/index.html">Home</a></li>
+                    <li><a href="#">Algorithms</a></li>
+                    <li><a href="#">Categories</a></li>
+                    <li><a href="#">Complexities</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        {% block content %}{% endblock %}
+
+        <footer>
+            <p>© {{ current_year }} AlgoWiki - Algorithm Catalog</p>
+        </footer>
+    </div>
+
+    <script src="{{ base_path }}/assets/js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Sort | AlgoWiki</title>
+    <link rel="stylesheet" href="../assets/css/dark.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-project-diagram"></i>
+                </div>
+                <h1>Algo<span>Wiki</span></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="#">Algorithms</a></li>
+                    <li><a href="#">Categories</a></li>
+                    <li><a href="#">Complexities</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        
+<div class="main-content">
+    <div class="algorithm-card">
+        <div class="card-header">
+            <h2>Quick Sort</h2>
+            <p>A fast and widely used sorting algorithm based on divide and conquer.</p>
+        </div>
+
+        <div class="card-body">
+            <div class="properties-grid">
+                
+                <div class="property-card">
+                    <i class="fas fas fa-clock"></i>
+                    <h3>Time Complexity</h3>
+                    <p>O(n log n)</p>
+                    <span class="badge badge-time">Nice</span>
+                </div>
+                
+                <div class="property-card">
+                    <i class="fas fas fa-memory"></i>
+                    <h3>Space Complexity</h3>
+                    <p>O(log n)</p>
+                    <span class="badge badge-space">Very Fast</span>
+                </div>
+                
+                <div class="property-card">
+                    <i class="fas fas fa-exchange-alt"></i>
+                    <h3>In-Place</h3>
+                    <p>Yes</p>
+                    <span class="badge badge-inplace">Yes</span>
+                </div>
+                
+                <div class="property-card">
+                    <i class="fas fas fa-balance-scale"></i>
+                    <h3>Stability</h3>
+                    <p>No</p>
+                    <span class="badge badge-stability">No</span>
+                </div>
+                
+                <div class="property-card">
+                    <i class="fas fas fa-brain"></i>
+                    <h3>Difficulty</h3>
+                    <p>Medium</p>
+                    <span class="badge badge-difficulty">★★★☆☆</span>
+                </div>
+                
+            </div>
+
+            <h3 class="section-title"><i class="fas fa-book-open"></i> Description</h3>
+            <div class="description">
+                <p>Quick Sort is a highly efficient sorting algorithm based on the <strong>divide and conquer</strong> paradigm.</p>
+<p>It works by selecting a <em>pivot</em> element and partitioning the array such that elements less than the pivot go to its left and elements greater go to its right. Then, it recursively sorts the two partitions.</p>
+<p>Steps:</p> <ol> <li>Choose a pivot element</li> <li>Partition the array around the pivot</li> <li>Recursively sort the sub-arrays</li> </ol>
+<p>Although the worst case is <code>O(n^2)</code>, this can be avoided using randomized pivots or techniques like median-of-three. It is in-place and generally faster than Merge Sort for average cases.</p>
+            </div>
+
+            <h3 class="section-title"><i class="fas fa-chart-line"></i> Computational Complexity</h3>
+            <div class="complexity-chart">
+                <div class="bar" style="height: 40%; background: #4cc9f0;">
+                    <div class="bar-value">O(n log n)</div>
+                    <div class="bar-label">Best</div>
+                </div>
+                <div class="bar" style="height: 70%; background: #4361ee;">
+                    <div class="bar-value">O(n log n)</div>
+                    <div class="bar-label">Average</div>
+                </div>
+                <div class="bar" style="height: 100%; background: #3a0ca3;">
+                    <div class="bar-value">O(n^2)</div>
+                    <div class="bar-label">Worst</div>
+                </div>
+                <div class="bar" style="height: 70%; background: #f72585;">
+                    <div class="bar-value">O(log n)</div>
+                    <div class="bar-label">Spatial</div>
+                </div>
+            </div>
+
+            <h3 class="section-title"><i class="fas fa-code"></i> Implementation</h3>
+            <div class="tabs">
+                
+            </div>
+
+            
+        </div>
+    </div>
+
+    <div class="sidebar">
+        <div class="sidebar-card">
+    <h3><i class="fas fa-list"></i> Popular Algorithms</h3>
+    <ul class="algo-list">
+        
+        <li>
+            <a href="../algorithms/quick_sort.html">
+                <i class="fas fas fa-sort-amount-down"></i> Quick Sort
+            </a>
+        </li>
+        
+        <li>
+            <a href="../algorithms/binary_search.html">
+                <i class="fas fas fa-search"></i> Binary Search
+            </a>
+        </li>
+        
+        <li>
+            <a href="../algorithms/dijkstra.html">
+                <i class="fas fas fa-sitemap"></i> Dijkstra
+            </a>
+        </li>
+        
+        <li>
+            <a href="../algorithms/heap_sort.html">
+                <i class="fas fas fa-sort-numeric-down"></i> Heap Sort
+            </a>
+        </li>
+        
+        <li>
+            <a href="../algorithms/strassen.html">
+                <i class="fas fas fa-bezier-curve"></i> Strassen
+            </a>
+        </li>
+        
+    </ul>
+</div>
+        <div class="sidebar-card">
+    <h3><i class="fas fa-tags"></i> Categories</h3>
+    <div class="tag-list">
+        
+            <span class="tag">
+                <a href="../categories/sorting.html">
+                    Sorting
+                </a>
+            </span>
+        
+            <span class="tag">
+                <a href="../categories/divide and conquer.html">
+                    Divide And Conquer
+                </a>
+            </span>
+        
+            <span class="tag">
+                <a href="../categories/recursion.html">
+                    Recursion
+                </a>
+            </span>
+        
+    </div>
+</div>
+        <div class="sidebar-card">
+    <h3><i class="fas fa-info-circle"></i> Curiosities</h3>
+    <p>Quick Sort was developed by Tony Hoare in 1960 and is still considered one of the fastest sorting algorithms in practice.</p>
+    <div class="property-card" style="margin-top: 15px; text-align: center;">
+
+        <h3>Creation Year</h3>
+        <p>1960</p>
+    </div>
+    <div class="property-card" style="margin-top: 15px; text-align: center;">
+
+        <h3>Author</h3>
+        <p>Tony Hoare</p>
+    </div>
+</div>
+    </div>
+</div>
+
+
+        <footer>
+            <p>©  AlgoWiki - Algorithm Catalog</p>
+        </footer>
+    </div>
+
+    <script src="../assets/js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+{% extends "base.html.j2" %}
+
+{% block content %}
+<h1 class="page-title">The Most Complete Algorithm Catalog</h1>
+
+<div class="algorithms-grid">
+    {% for algo in algorithms %}
+    <a href="{{ base_path }}/algorithms/{{ algo.id }}.html" class="algo-card algo-list">
+        <div class="algo-icon">
+            <i class="fas {{ algo.icon }}"></i>
+        </div>
+        <h3>{{ algo.name }}</h3>
+        <p>{{ algo.description | truncate(100) }}</p>
+        <div class="algo-meta">
+            <span class="complexity">{{ algo.avg_time }}</span>
+            {% for cat in algo.categories[:2] %}
+            <span class="category">{{ cat.title }}</span>
+            {% endfor %}
+        </div>
+    </a>
+    {% endfor %}
+</div>
+{% endblock %}

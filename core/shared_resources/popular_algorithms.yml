@@ -1,0 +1,19 @@
+- id: quick_sort
+  name: Quick Sort
+  icon: fas fa-sort-amount-down
+
+- id: binary_search
+  name: Binary Search
+  icon: fas fa-search
+
+- id: dijkstra
+  name: Dijkstra
+  icon: fas fa-sitemap
+
+- id: heap_sort
+  name: Heap Sort
+  icon: fas fa-sort-numeric-down
+
+- id: strassen
+  name: Strassen
+  icon: fas fa-bezier-curve

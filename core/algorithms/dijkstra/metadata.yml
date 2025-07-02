@@ -1,0 +1,30 @@
+id: dijkstra
+name: Dijkstra's Algorithm
+description: A graph algorithm to find the shortest path from a source to all other vertices.
+categories:
+- graphs
+- shortest path
+- greedy
+best_time: O(V + E log V)
+avg_time: O(V + E log V)
+worst_time: O(V^2)
+space: O(V)
+stability: 1
+inplace: 0
+difficulty: 4
+long_description: "<p>Dijkstra's algorithm solves the single-source shortest path problem for graphs with non-negative edge weights.</p>
+
+<p>It maintains a set of vertices with known shortest distances and iteratively expands this set using a greedy approach.</p>
+
+<p>Steps:</p>
+<ol>
+  <li>Initialize distances and priority queue</li>
+  <li>Pick the vertex with the smallest tentative distance</li>
+  <li>Update distances to its neighbors</li>
+  <li>Repeat until all vertices are processed</li>
+</ol>
+
+<p>Using a priority queue (e.g., a min-heap) makes the algorithm more efficient on sparse graphs.</p>"
+year: 1956
+author: Edsger Dijkstra
+curiosities: Edsger Dijkstra developed this algorithm while trying to compute the shortest route from Rotterdam to Groningen.

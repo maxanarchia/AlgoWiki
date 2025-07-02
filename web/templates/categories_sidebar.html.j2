@@ -1,0 +1,12 @@
+<div class="sidebar-card">
+    <h3><i class="fas fa-tags"></i> Categories</h3>
+    <div class="tag-list">
+        {% for tag in algo.categories %}
+            <span class="tag">
+                <a href="{{ base_path }}/categories/{{ tag.name }}.html">
+                    {{ tag.title }}
+                </a>
+            </span>
+        {% endfor %}
+    </div>
+</div>

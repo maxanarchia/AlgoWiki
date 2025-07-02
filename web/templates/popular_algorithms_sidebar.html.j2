@@ -1,0 +1,12 @@
+<div class="sidebar-card">
+    <h3><i class="fas fa-list"></i> Popular Algorithms</h3>
+    <ul class="algo-list">
+        {% for popular in popular_algorithms %}
+        <li>
+            <a href="{{ base_path }}/algorithms/{{ popular.id }}.html">
+                <i class="fas {{ popular.icon }}"></i> {{ popular.name }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>

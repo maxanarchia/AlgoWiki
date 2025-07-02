@@ -1,0 +1,27 @@
+id: binary_search
+name: Binary Search
+description: A logarithmic-time search algorithm for sorted arrays.
+categories:
+- search
+- divide and conquer
+best_time: O(1)
+avg_time: O(log n)
+worst_time: O(log n)
+space: O(1)
+stability: 1
+inplace: 1
+difficulty: 1
+long_description: "<p>Binary Search is an efficient algorithm for finding an element in a <strong>sorted array</strong>.</p>
+
+<p>It works by repeatedly dividing the search interval in half:</p>
+<ol>
+  <li>Compare the target with the middle element</li>
+  <li>If equal, return the index</li>
+  <li>If less, repeat on the left half</li>
+  <li>If greater, repeat on the right half</li>
+</ol>
+
+<p>It is extremely fast with a time complexity of <code>O(log n)</code> but only applicable to sorted collections.</p>"
+year: 1946
+author: John Mauchly
+curiosities: Binary search is deceptively simple but easy to get wrong when implemented manually; many historical bugs arose from incorrect mid-point calculations.

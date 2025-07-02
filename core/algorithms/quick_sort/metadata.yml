@@ -1,0 +1,29 @@
+id: quick_sort
+name: Quick Sort
+description: A fast and widely used sorting algorithm based on divide and conquer.
+categories:
+- sorting
+- divide and conquer
+- recursion
+best_time: O(n log n)
+avg_time: O(n log n)
+worst_time: O(n^2)
+space: O(log n)
+stability: 0
+inplace: 1
+difficulty: 3
+long_description: "<p>Quick Sort is a highly efficient sorting algorithm based on the <strong>divide and conquer</strong> paradigm.</p>
+
+<p>It works by selecting a <em>pivot</em> element and partitioning the array such that elements less than the pivot go to its left and elements greater go to its right. Then, it recursively sorts the two partitions.</p>
+
+<p>Steps:</p>
+<ol>
+  <li>Choose a pivot element</li>
+  <li>Partition the array around the pivot</li>
+  <li>Recursively sort the sub-arrays</li>
+</ol>
+
+<p>Although the worst case is <code>O(n^2)</code>, this can be avoided using randomized pivots or techniques like median-of-three. It is in-place and generally faster than Merge Sort for average cases.</p>"
+year: 1960
+author: Tony Hoare
+curiosities: Quick Sort was developed by Tony Hoare in 1960 and is still considered one of the fastest sorting algorithms in practice.

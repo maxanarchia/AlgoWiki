@@ -1,0 +1,29 @@
+id: bfs
+name: Breadth-First Search
+description: A graph traversal algorithm that explores vertices in layers.
+categories:
+- graphs
+- traversal
+- search
+best_time: O(V + E)
+avg_time: O(V + E)
+worst_time: O(V + E)
+space: O(V)
+stability: 1
+inplace: 0
+difficulty: 2
+long_description: "<p>Breadth-First Search (BFS) is a graph traversal algorithm that explores all neighbors of a vertex before moving to the next level.</p>
+
+<p>It uses a queue to keep track of the next vertex to visit, making it ideal for finding the shortest path in unweighted graphs.</p>
+
+<p>Steps:</p>
+<ol>
+  <li>Start from a source vertex</li>
+  <li>Visit all its neighbors</li>
+  <li>Then visit the neighbors’ neighbors, and so on</li>
+</ol>
+
+<p>BFS guarantees the shortest path in terms of the number of edges in unweighted graphs.</p>"
+year: 1959
+author: Edward F. Moore
+curiosities: BFS is often used in AI, network analysis, and solving puzzles like the Rubik’s Cube.

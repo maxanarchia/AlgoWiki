@@ -1,0 +1,77 @@
+{% extends "base.html.j2" %}
+
+{% block title %}{{ algo.name }} | AlgoWiki{% endblock %}
+
+{% block content %}
+<div class="main-content">
+    <div class="algorithm-card">
+        <div class="card-header">
+            <h2>{{ algo.name }}</h2>
+            <p>{{ algo.description }}</p>
+        </div>
+
+        <div class="card-body">
+            <div class="properties-grid">
+                {% for key, prop in algo.properties.items() %}
+                <div class="property-card">
+                    <i class="fas {{ prop.icon }}"></i>
+                    <h3>{{ prop.name }}</h3>
+                    <p>{{ prop.value }}</p>
+                    <span class="badge badge-{{ key }}">{{ prop.label }}</span>
+                </div>
+                {% endfor %}
+            </div>
+
+            <h3 class="section-title"><i class="fas fa-book-open"></i> Description</h3>
+            <div class="description">
+                {{ algo.long_description | safe }}
+            </div>
+
+            <h3 class="section-title"><i class="fas fa-chart-line"></i> Computational Complexity</h3>
+            <div class="complexity-chart">
+                <div class="bar" style="height: 40%; background: #4cc9f0;">
+                    <div class="bar-value">{{ algo.best_time }}</div>
+                    <div class="bar-label">Best</div>
+                </div>
+                <div class="bar" style="height: 70%; background: #4361ee;">
+                    <div class="bar-value">{{ algo.avg_time }}</div>
+                    <div class="bar-label">Average</div>
+                </div>
+                <div class="bar" style="height: 100%; background: #3a0ca3;">
+                    <div class="bar-value">{{ algo.worst_time }}</div>
+                    <div class="bar-label">Worst</div>
+                </div>
+                <div class="bar" style="height: 70%; background: #f72585;">
+                    <div class="bar-value">{{ algo.space }}</div>
+                    <div class="bar-label">Spatial</div>
+                </div>
+            </div>
+
+            <h3 class="section-title"><i class="fas fa-code"></i> Implementation</h3>
+            <div class="tabs">
+                {% for lang in algo.code_examples.keys() %}
+                <div class="tab {% if loop.first %}active{% endif %}" data-lang="{{ lang }}">
+                    {{ "C++" if lang == "cpp" else lang | upper }}
+                </div>
+                {% endfor %}
+            </div>
+
+            {% for lang, code in algo.code_examples.items() %}
+            <div class="code-container {% if loop.first %}active{% endif %}" id="code-{{ lang }}">
+                <div class="code-header">
+                    <span>{{ algo.id }}.{{ lang }}</span>
+                    <button class="copy-btn" data-target="code-{{ lang }}">Copy Code <i class="fas fa-copy"></i></button>
+                </div>
+                <pre><code class="language-{{ lang }}">{{ code }}</code></pre>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="sidebar">
+        {% include "popular_algorithms_sidebar.html.j2" %}
+        {% include "categories_sidebar.html.j2" %}
+        {% include "other_info_sidebar.html.j2" %}
+    </div>
+</div>
+{% endblock %}

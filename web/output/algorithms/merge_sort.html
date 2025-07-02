@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merge Sort | AlgoWiki</title>
+    <link rel="stylesheet" href="../assets/css/dark.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-project-diagram"></i>
+                </div>
+                <h1>Algo<span>Wiki</span></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="#">Algorithms</a></li>
+                    <li><a href="#">Categories</a></li>
+                    <li><a href="#">Complexities</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        
+<div class="main-content">
+    <div class="algorithm-card">
+        <div class="card-header">
+            <h2>Merge Sort</h2>
+            <p>An efficient and stable algorithm, based on divide and conquer paradigm.</p>
+        </div>
+
+        <div class="card-body">
+            <div class="properties-grid">
+                
+                <div class="property-card">
+                    <i class="fas fas fa-clock"></i>
+                    <h3>Time Complexity</h3>
+                    <p>O(n log n)</p>
+                    <span class="badge badge-time">Nice</span>
+                </div>
+                
+                <div class="property-card">
+                    <i class="fas fas fa-memory"></i>
+                    <h3>Space Complexity</h3>
+                    <p>O(n)</p>
+                    <span class="badge badge-space">Good</span>
+                </div>
+                
+                <div class="property-card">
+                    <i class="fas fas fa-exchange-alt"></i>
+                    <h3>In-Place</h3>
+                    <p>Yes</p>
+                    <span class="badge badge-inplace">Yes</span>
+                </div>
+                
+                <div class="property-card">
+                    <i class="fas fas fa-balance-scale"></i>
+                    <h3>Stability</h3>
+                    <p>Yes</p>
+                    <span class="badge badge-stability">Yes</span>
+                </div>
+                
+                <div class="property-card">
+                    <i class="fas fas fa-brain"></i>
+                    <h3>Difficulty</h3>
+                    <p>Medium</p>
+                    <span class="badge badge-difficulty">★★★☆☆</span>
+                </div>
+                
+            </div>
+
+            <h3 class="section-title"><i class="fas fa-book-open"></i> Description</h3>
+            <div class="description">
+                <p>Merge Sort is a sorting algorithm based on the <strong>divide and conquer</strong> paradigm. The core idea is to recursively divide the array into two halves, sort each half, and then merge the two sorted halves.</p>
+<p>The merging process is the fundamental part of the algorithm:</p>
+<ol> <li>Divide the array into two halves</li> <li>Recursively sort each half</li> <li>Merge the two sorted halves</li> </ol>
+<p>This approach guarantees a time complexity of <code>O(n log n)</code> in all cases (best, average, and worst), making it highly efficient for large datasets.</p>
+<p>Merge Sort is particularly useful when the data to be sorted does not fit entirely in main memory and must be handled using external memory (external sorting).</p>
+            </div>
+
+            <h3 class="section-title"><i class="fas fa-chart-line"></i> Computational Complexity</h3>
+            <div class="complexity-chart">
+                <div class="bar" style="height: 40%; background: #4cc9f0;">
+                    <div class="bar-value">O(n log n)</div>
+                    <div class="bar-label">Best</div>
+                </div>
+                <div class="bar" style="height: 70%; background: #4361ee;">
+                    <div class="bar-value">O(n log n)</div>
+                    <div class="bar-label">Average</div>
+                </div>
+                <div class="bar" style="height: 100%; background: #3a0ca3;">
+                    <div class="bar-value">O(n log n)</div>
+                    <div class="bar-label">Worst</div>
+                </div>
+                <div class="bar" style="height: 70%; background: #f72585;">
+                    <div class="bar-value">O(n)</div>
+                    <div class="bar-label">Spatial</div>
+                </div>
+            </div>
+
+            <h3 class="section-title"><i class="fas fa-code"></i> Implementation</h3>
+            <div class="tabs">
+                
+                <div class="tab active" data-lang="py">
+                    PY
+                </div>
+                
+                <div class="tab " data-lang="c">
+                    C
+                </div>
+                
+                <div class="tab " data-lang="cpp">
+                    C++
+                </div>
+                
+            </div>
+
+            
+            <div class="code-container active" id="code-py">
+                <div class="code-header">
+                    <span>merge_sort.py</span>
+                    <button class="copy-btn" data-target="code-py">Copy Code <i class="fas fa-copy"></i></button>
+                </div>
+                <pre><code class="language-py">def merge_sort(arr):
+    if len(arr) > 1:
+        mid = len(arr) // 2
+        left_half = arr[:mid]
+        right_half = arr[mid:]
+
+        merge_sort(left_half)
+        merge_sort(right_half)
+
+        i = j = k = 0
+
+        while i < len(left_half) and j < len(right_half):
+            if left_half[i] < right_half[j]:
+                arr[k] = left_half[i]
+                i += 1
+            else:
+                arr[k] = right_half[j]
+                j += 1
+            k += 1
+
+        while i < len(left_half):
+            arr[k] = left_half[i]
+            i += 1
+            k += 1
+
+        while j < len(right_half):
+            arr[k] = right_half[j]
+            j += 1
+            k += 1
+
+
+# Esempio di utilizzo
+arr = [12, 11, 13, 5, 6, 7]
+print("Array originale:", arr)
+merge_sort(arr)
+print("Array ordinato:", arr)</code></pre>
+            </div>
+            
+            <div class="code-container " id="code-c">
+                <div class="code-header">
+                    <span>merge_sort.c</span>
+                    <button class="copy-btn" data-target="code-c">Copy Code <i class="fas fa-copy"></i></button>
+                </div>
+                <pre><code class="language-c">#include <stdio.h>
+
+void merge(int arr[], int l, int m, int r) {
+    int i, j, k;
+    int n1 = m - l + 1;
+    int n2 = r - m;
+
+    int L[n1], R[n2];
+
+    for (i = 0; i < n1; i++)
+        L[i] = arr[l + i];
+    for (j = 0; j < n2; j++)
+        R[j] = arr[m + 1 + j];
+
+    i = 0;
+    j = 0;
+    k = l;
+
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) {
+            arr[k] = L[i];
+            i++;
+        } else {
+            arr[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+
+    while (i < n1) {
+        arr[k] = L[i];
+        i++;
+        k++;
+    }
+
+    while (j < n2) {
+        arr[k] = R[j];
+        j++;
+        k++;
+    }
+}
+
+void mergeSort(int arr[], int l, int r) {
+    if (l < r) {
+        int m = l + (r - l) / 2;
+        mergeSort(arr, l, m);
+        mergeSort(arr, m + 1, r);
+        merge(arr, l, m, r);
+    }
+}
+
+int main() {
+    int arr[] = {12, 11, 13, 5, 6, 7};
+    int arr_size = sizeof(arr) / sizeof(arr[0]);
+
+    printf("Array originale: ");
+    for (int i = 0; i < arr_size; i++)
+        printf("%d ", arr[i]);
+
+    mergeSort(arr, 0, arr_size - 1);
+
+    printf("\nArray ordinato: ");
+    for (int i = 0; i < arr_size; i++)
+        printf("%d ", arr[i]);
+    return 0;
+}</code></pre>
+            </div>
+            
+            <div class="code-container " id="code-cpp">
+                <div class="code-header">
+                    <span>merge_sort.cpp</span>
+                    <button class="copy-btn" data-target="code-cpp">Copy Code <i class="fas fa-copy"></i></button>
+                </div>
+                <pre><code class="language-cpp">#include <iostream>
+#include <vector>
+using namespace std;
+
+void merge(vector<int>& arr, int l, int m, int r) {
+    int n1 = m - l + 1;
+    int n2 = r - m;
+
+    vector<int> L(n1), R(n2);
+
+    for (int i = 0; i < n1; i++)
+        L[i] = arr[l + i];
+    for (int j = 0; j < n2; j++)
+        R[j] = arr[m + 1 + j];
+
+    int i = 0, j = 0, k = l;
+
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) {
+            arr[k] = L[i];
+            i++;
+        } else {
+            arr[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+
+    while (i < n1) {
+        arr[k] = L[i];
+        i++;
+        k++;
+    }
+
+    while (j < n2) {
+        arr[k] = R[j];
+        j++;
+        k++;
+    }
+}
+
+void mergeSort(vector<int>& arr, int l, int r) {
+    if (l < r) {
+        int m = l + (r - l) / 2;
+        mergeSort(arr, l, m);
+        mergeSort(arr, m + 1, r);
+        merge(arr, l, m, r);
+    }
+}
+
+int main() {
+    vector<int> arr = {12, 11, 13, 5, 6, 7};
+    cout << "Array originale: ";
+    for (int num : arr) cout << num << " ";
+    cout << endl;
+
+    mergeSort(arr, 0, arr.size() - 1);
+
+    cout << "Array ordinato: ";
+    for (int num : arr) cout << num << " ";
+    return 0;
+}</code></pre>
+            </div>
+            
+        </div>
+    </div>
+
+    <div class="sidebar">
+        <div class="sidebar-card">
+    <h3><i class="fas fa-list"></i> Popular Algorithms</h3>
+    <ul class="algo-list">
+        
+        <li>
+            <a href="../algorithms/quick_sort.html">
+                <i class="fas fas fa-sort-amount-down"></i> Quick Sort
+            </a>
+        </li>
+        
+        <li>
+            <a href="../algorithms/binary_search.html">
+                <i class="fas fas fa-search"></i> Binary Search
+            </a>
+        </li>
+        
+        <li>
+            <a href="../algorithms/dijkstra.html">
+                <i class="fas fas fa-sitemap"></i> Dijkstra
+            </a>
+        </li>
+        
+        <li>
+            <a href="../algorithms/heap_sort.html">
+                <i class="fas fas fa-sort-numeric-down"></i> Heap Sort
+            </a>
+        </li>
+        
+        <li>
+            <a href="../algorithms/strassen.html">
+                <i class="fas fas fa-bezier-curve"></i> Strassen
+            </a>
+        </li>
+        
+    </ul>
+</div>
+        <div class="sidebar-card">
+    <h3><i class="fas fa-tags"></i> Categories</h3>
+    <div class="tag-list">
+        
+            <span class="tag">
+                <a href="../categories/sorting.html">
+                    Sorting
+                </a>
+            </span>
+        
+            <span class="tag">
+                <a href="../categories/divide and conquer.html">
+                    Divide And Conquer
+                </a>
+            </span>
+        
+            <span class="tag">
+                <a href="../categories/recursion.html">
+                    Recursion
+                </a>
+            </span>
+        
+    </div>
+</div>
+        <div class="sidebar-card">
+    <h3><i class="fas fa-info-circle"></i> Curiosities</h3>
+    <p>Merge Sort was invented by John von Neumann in 1945. It was on of the first sorting algorithms to be implemented on a computer.</p>
+    <div class="property-card" style="margin-top: 15px; text-align: center;">
+
+        <h3>Creation Year</h3>
+        <p>1945</p>
+    </div>
+    <div class="property-card" style="margin-top: 15px; text-align: center;">
+
+        <h3>Author</h3>
+        <p>John von Neumann</p>
+    </div>
+</div>
+    </div>
+</div>
+
+
+        <footer>
+            <p>©  AlgoWiki - Algorithm Catalog</p>
+        </footer>
+    </div>
+
+    <script src="../assets/js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+id: merge_sort
+name: Merge Sort
+description: An efficient and stable algorithm, based on divide and conquer paradigm.
+categories:
+- sorting
+- divide and conquer
+- recursion
+best_time: O(n log n)
+avg_time: O(n log n)
+worst_time: O(n log n)
+space: O(n)
+stability: 1
+inplace: 1
+difficulty: 3
+long_description: "<p>Merge Sort is a sorting algorithm based on the <strong>divide and conquer</strong> paradigm.
+The core idea is to recursively divide the array into two halves, sort each half,
+and then merge the two sorted halves.</p>
+
+<p>The merging process is the fundamental part of the algorithm:</p>
+
+<ol>
+  <li>Divide the array into two halves</li>
+  <li>Recursively sort each half</li>
+  <li>Merge the two sorted halves</li>
+</ol>
+
+<p>This approach guarantees a time complexity of <code>O(n log n)</code> in all cases
+(best, average, and worst), making it highly efficient for large datasets.</p>
+
+<p>Merge Sort is particularly useful when the data to be sorted does not fit entirely in main memory
+and must be handled using external memory (external sorting).</p>"
+year: 1945
+author: John von Neumann
+curiosities: Merge Sort was invented by John von Neumann in 1945. It was on of the first sorting algorithms to be implemented on a computer.

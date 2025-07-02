@@ -1,0 +1,30 @@
+id: bubble_sort
+name: Bubble Sort
+description: A simple sorting algorithm that repeatedly swaps adjacent elements.
+categories:
+- sorting
+- elementary
+best_time: O(n)
+avg_time: O(n^2)
+worst_time: O(n^2)
+space: O(1)
+stability: 1
+inplace: 1
+difficulty: 1
+long_description: "<p>Bubble Sort is a straightforward sorting algorithm that repeatedly steps through the list,
+compares adjacent elements, and swaps them if they are in the wrong order.</p>
+
+<p>The algorithm gets its name because smaller elements bubble to the top of the list with each pass.</p>
+
+<p>Steps:</p>
+<ol>
+  <li>Compare adjacent elements</li>
+  <li>Swap if needed</li>
+  <li>Repeat until the list is sorted</li>
+</ol>
+
+<p>While it is easy to understand and implement, Bubble Sort is inefficient on large datasets.
+However, it can be optimized to detect if the array is already sorted.</p>"
+year: 1956
+author: unknown
+curiosities: Despite being one of the least efficient sorting algorithms, Bubble Sort is often taught for its educational value and simplicity.

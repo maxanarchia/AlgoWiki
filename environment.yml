@@ -1,0 +1,14 @@
+name: algo-wiki
+channels:
+  - conda-forge
+  - defaults
+  - bioconda
+dependencies:
+  - python=3.10
+  - pip
+  - pyyaml
+  - jinja2
+  - customtkinter
+  - pip:
+    - jinja2
+    - pyyaml

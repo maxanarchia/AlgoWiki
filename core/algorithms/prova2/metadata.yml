@@ -1,5 +1,5 @@
-id: binary_search
-name: Binary Search
+id: prova2
+name: Prova2
 description: A logarithmic-time search algorithm for sorted arrays.
 categories:
 - search

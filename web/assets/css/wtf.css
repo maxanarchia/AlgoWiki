@@ -1,0 +1,992 @@
+:root {
+    --bg-primary: #000;
+    --bg-secondary: #12002d;
+    --bg-tertiary: #220066;
+    --bg-card: #0a0018;
+    --bg-code: #1a0033;
+    --primary: #ff00ff; /* Magenta neon */
+    --primary-light: #ff77ff;
+    --primary-dark: #cc00cc;
+    --secondary: #00ffff; /* Ciano neon */
+    --accent: #ffff00; /* Giallo shock */
+    --wtf-pink: #ff00aa;
+    --wtf-blue: #00aaff;
+    --wtf-green: #00ff77;
+    --text-primary: #fff;
+    --text-secondary: #ff99ff;
+    --text-tertiary: #aa66ff;
+    --success: #0f0;
+    --warning: #ff0;
+    --danger: #f00;
+    --border-radius: 8px 20px;
+    --box-shadow: 0 0 30px rgba(255, 0, 255, 0.7);
+    --transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    --wtf-font: 'Comic Sans MS', 'Comic Neue', cursive;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--wtf-font);
+    animation: colorPulse 10s infinite alternate;
+}
+
+@keyframes colorPulse {
+    0% { background-color: #000; }
+    25% { background-color: #220044; }
+    50% { background-color: #440022; }
+    75% { background-color: #002244; }
+    100% { background-color: #442200; }
+}
+
+body {
+    background:
+        radial-gradient(circle at 10% 20%, var(--bg-secondary) 0%, var(--bg-primary) 100%),
+        repeating-linear-gradient(45deg, transparent, transparent 100px, #ff00ff33 100px, #00ffff33 200px);
+    color: var(--text-primary);
+    line-height: 1.5;
+    padding: 20px;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+body::before {
+    content: "WTF?";
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    font-size: 120px;
+    opacity: 0.05;
+    z-index: -1;
+    color: var(--primary);
+    text-shadow: 0 0 50px var(--secondary);
+}
+
+.container {
+    max-width: 1300px;
+    margin: 0 auto;
+    position: relative;
+    animation: shake 0.5s infinite alternate;
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(10px); }
+}
+
+header {
+    background: rgba(10, 0, 24, 0.7);
+    border-radius: 50px 0 50px 0;
+    box-shadow:
+        0 0 20px var(--primary),
+        0 0 40px var(--secondary);
+    padding: 30px;
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 3px dashed var(--primary);
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(5px);
+}
+
+header::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        repeating-linear-gradient(45deg,
+            transparent,
+            transparent 10px,
+            var(--primary) 10px,
+            var(--secondary) 20px);
+    opacity: 0.1;
+    z-index: -1;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+}
+
+.logo-icon {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    width: 80px;
+    height: 80px;
+    border-radius: 50% 20% 50% 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    font-size: 40px;
+    box-shadow:
+        0 0 30px var(--primary),
+        0 0 60px var(--secondary);
+    animation: spin 5s linear infinite;
+}
+
+@keyframes spin {
+    100% { transform: rotate(360deg); }
+}
+
+.logo h1 {
+    font-size: 48px;
+    font-weight: 900;
+    background: linear-gradient(90deg, var(--primary), var(--wtf-green), var(--wtf-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+    letter-spacing: -2px;
+    animation: textGlitch 2s infinite alternate;
+}
+
+@keyframes textGlitch {
+    0% { transform: skew(0deg); }
+    20% { transform: skew(10deg); }
+    40% { transform: skew(-10deg) scaleY(1.2); }
+    60% { transform: skew(0deg); }
+    80% { transform: translateX(10px); }
+    100% { transform: translateX(-10px); }
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 25px;
+    flex-wrap: wrap;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-weight: 700;
+    padding: 15px 25px;
+    border-radius: 50px;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    border: 2px solid var(--wtf-blue);
+    animation: bounce 2s infinite alternate;
+}
+
+@keyframes bounce {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-10px); }
+}
+
+nav a::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    z-index: -1;
+    opacity: 0;
+    transition: var(--transition);
+}
+
+nav a:hover, nav a.active {
+    color: black;
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 0 30px var(--accent);
+}
+
+nav a:hover::before, nav a.active::before {
+    opacity: 1;
+}
+
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 40px;
+}
+
+.algorithm-card {
+    background: rgba(10, 0, 24, 0.5);
+    backdrop-filter: blur(10px);
+    border-radius: 40px 10px 40px 10px;
+    box-shadow:
+        0 0 20px var(--primary),
+        0 0 40px var(--secondary);
+    overflow: hidden;
+    transition: var(--transition);
+    border: 3px dotted var(--wtf-green);
+    position: relative;
+}
+
+.algorithm-card:hover {
+    transform: rotate(3deg) scale(1.03);
+    box-shadow:
+        0 0 40px var(--primary),
+        0 0 80px var(--secondary);
+    border: 3px solid var(--accent);
+}
+
+.card-header {
+    background: linear-gradient(90deg, var(--primary-dark), var(--wtf-pink));
+    color: black;
+    padding: 30px;
+    border-bottom: 3px wavy var(--secondary);
+    position: relative;
+    text-align: center;
+}
+
+.card-header::after {
+    content: "???";
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 36px;
+    opacity: 0.5;
+}
+
+.card-header h2 {
+    font-size: 52px;
+    margin-bottom: 15px;
+    text-shadow:
+        0 0 10px var(--secondary),
+        0 0 20px var(--wtf-blue);
+    font-family: var(--wtf-font);
+    letter-spacing: -3px;
+    animation: shake 0.5s infinite;
+}
+
+.card-header p {
+    font-size: 24px;
+    max-width: 800px;
+    margin: 0 auto;
+    font-weight: 700;
+    color: rgba(0, 0, 0, 0.8);
+}
+
+.card-body {
+    padding: 35px;
+}
+
+.properties-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.property-card {
+    background: rgba(34, 0, 102, 0.5);
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    transition: var(--transition);
+    border: 2px solid var(--wtf-blue);
+    position: relative;
+    overflow: hidden;
+    animation: float 3s infinite alternate;
+}
+
+@keyframes float {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-20px); }
+}
+
+.property-card:hover {
+    transform: rotate(10deg) scale(1.1);
+    border-color: var(--accent);
+    box-shadow: 0 0 40px var(--wtf-green);
+    z-index: 10;
+}
+
+.property-card i {
+    font-size: 48px;
+    margin-bottom: 20px;
+    color: var(--wtf-green);
+    text-shadow: 0 0 20px var(--wtf-green);
+}
+
+.property-card h3 {
+    font-size: 24px;
+    color: var(--text-secondary);
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.property-card p {
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--text-primary);
+    text-shadow: 0 0 10px var(--primary);
+}
+
+.badge {
+    display: inline-block;
+    padding: 10px 25px;
+    border-radius: 50px;
+    font-size: 18px;
+    font-weight: 800;
+    margin-top: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 2px solid var(--wtf-pink);
+    transition: var(--transition);
+    animation: blink 1s infinite alternate;
+}
+
+@keyframes blink {
+    0% { opacity: 1; }
+    100% { opacity: 0.3; }
+}
+
+.badge-time {
+    background: rgba(255, 0, 255, 0.3);
+    color: var(--primary-light);
+    border-color: var(--primary);
+}
+
+.badge-space {
+    background: rgba(0, 255, 255, 0.3);
+    color: var(--secondary);
+    border-color: var(--secondary);
+}
+
+.badge-inplace {
+    background: rgba(255, 255, 0, 0.3);
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+.badge-stability {
+    background: rgba(0, 255, 0, 0.3);
+    color: var(--success);
+    border-color: var(--success);
+}
+
+.badge-difficulty {
+    background: rgba(255, 0, 0, 0.3);
+    color: var(--danger);
+    border-color: var(--danger);
+}
+
+.section-title {
+    font-size: 42px;
+    margin: 40px 0 25px;
+    padding-bottom: 15px;
+    border-bottom: 4px dotted var(--wtf-blue);
+    color: var(--wtf-green);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    text-transform: uppercase;
+    animation: colorShift 5s infinite alternate;
+}
+
+@keyframes colorShift {
+    0% { color: var(--wtf-green); }
+    25% { color: var(--primary); }
+    50% { color: var(--secondary); }
+    75% { color: var(--accent); }
+    100% { color: var(--wtf-pink); }
+}
+
+.tabs {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.tab {
+    padding: 20px 35px;
+    background: rgba(34, 0, 102, 0.5);
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 800;
+    transition: var(--transition);
+    color: var(--text-secondary);
+    border: 2px solid var(--wtf-pink);
+    font-size: 20px;
+    animation: jiggle 0.5s infinite alternate;
+}
+
+@keyframes jiggle {
+    0% { transform: rotate(0); }
+    25% { transform: rotate(5deg); }
+    50% { transform: rotate(-5deg); }
+    75% { transform: rotate(3deg); }
+    100% { transform: rotate(-3deg); }
+}
+
+.tab.active {
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    color: black;
+    font-weight: 900;
+    box-shadow: 0 0 30px var(--wtf-green);
+    transform: scale(1.1);
+    border: 2px solid var(--accent);
+}
+
+.code-container {
+    background: var(--bg-code);
+    border-radius: 20px;
+    overflow: hidden;
+    border: 3px solid var(--wtf-blue);
+    display: none;
+    position: relative;
+}
+
+.code-container.active {
+    display: block;
+    animation: appear 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes appear {
+    0% { opacity: 0; transform: scale(0.1) rotate(180deg); }
+    100% { opacity: 1; transform: scale(1) rotate(0); }
+}
+
+.code-header {
+    background: linear-gradient(90deg, var(--primary-dark), var(--wtf-pink));
+    padding: 15px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px dashed var(--accent);
+}
+
+.code-header span {
+    color: black;
+    font-size: 24px;
+    font-weight: 800;
+    text-shadow: 0 0 5px var(--wtf-blue);
+}
+
+.copy-btn {
+    background: rgba(0, 0, 0, 0.3);
+    color: var(--text-primary);
+    border: 2px solid var(--wtf-green);
+    padding: 15px 25px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: var(--transition);
+    font-weight: 800;
+    font-size: 18px;
+}
+
+.copy-btn:hover {
+    background: var(--wtf-green);
+    color: black;
+    transform: rotate(10deg) scale(1.1);
+    box-shadow: 0 0 20px var(--wtf-green);
+}
+
+pre {
+    padding: 35px;
+    margin: 0;
+    overflow-x: auto;
+    color: var(--text-primary);
+    font-size: 20px;
+    line-height: 1.8;
+    background:
+        repeating-linear-gradient(
+            45deg,
+            rgba(255,0,255,0.1),
+            rgba(255,0,255,0.1) 10px,
+            rgba(0,255,255,0.1) 10px,
+            rgba(0,255,255,0.1) 20px
+        );
+    font-family: 'Courier New', monospace;
+    position: relative;
+}
+
+pre code {
+    color: var(--text-primary);
+    text-shadow: 0 0 5px var(--primary);
+    position: relative;
+    z-index: 2;
+}
+
+pre::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        radial-gradient(circle, var(--primary) 0%, transparent 70%),
+        radial-gradient(circle, var(--secondary) 0%, transparent 70%);
+    opacity: 0.1;
+    z-index: 1;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.sidebar-card {
+    background: rgba(10, 0, 24, 0.5);
+    backdrop-filter: blur(10px);
+    border-radius: 0 40px 0 40px;
+    box-shadow:
+        0 0 20px var(--wtf-blue),
+        0 0 40px var(--wtf-pink);
+    padding: 30px;
+    border: 3px dotted var(--wtf-green);
+    position: relative;
+    overflow: hidden;
+    animation: float 4s infinite alternate-reverse;
+}
+
+.sidebar-card::before {
+    content: "!";
+    position: absolute;
+    top: -30px;
+    right: -30px;
+    font-size: 120px;
+    opacity: 0.1;
+    color: var(--accent);
+    transform: rotate(45deg);
+}
+
+.sidebar-card h3 {
+    font-size: 36px;
+    margin-bottom: 25px;
+    color: var(--wtf-green);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    text-transform: uppercase;
+    animation: glitch 1s infinite alternate;
+}
+
+@keyframes glitch {
+    0% { text-shadow: 0 0 10px var(--wtf-green); }
+    25% { text-shadow: 5px 0 10px var(--primary); }
+    50% { text-shadow: -5px 0 10px var(--secondary); }
+    75% { text-shadow: 0 5px 10px var(--accent); }
+    100% { text-shadow: 0 -5px 10px var(--wtf-pink); }
+}
+
+.algo-list {
+    list-style: none;
+}
+
+.algo-list li {
+    padding: 20px 0;
+    border-bottom: 2px dashed var(--wtf-blue);
+    position: relative;
+}
+
+.algo-list li:last-child {
+    border-bottom: none;
+}
+
+.algo-list a {
+    text-decoration: none;
+    color: var(--text-primary);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transition: var(--transition);
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 22px;
+}
+
+.algo-list a:hover {
+    background: rgba(255, 0, 255, 0.2);
+    color: var(--wtf-green);
+    transform: scale(1.1) rotate(-5deg);
+    text-shadow: 0 0 10px var(--wtf-green);
+}
+
+.algo-list a::before {
+    content: "»";
+    color: var(--wtf-pink);
+    font-size: 36px;
+    transition: var(--transition);
+}
+
+.algo-list a:hover::before {
+    transform: rotate(90deg) scale(1.5);
+    color: var(--accent);
+}
+
+.tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.tag {
+    background: rgba(34, 0, 102, 0.5);
+    padding: 15px 25px;
+    border-radius: 50px;
+    font-size: 20px;
+    color: var(--text-primary);
+    transition: var(--transition);
+    border: 2px solid var(--wtf-pink);
+    font-weight: 700;
+    animation: jiggle 1s infinite alternate;
+}
+
+.tag:hover {
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    color: black;
+    cursor: pointer;
+    box-shadow: 0 0 30px var(--wtf-blue);
+    transform: rotate(15deg) scale(1.2);
+    border-color: var(--accent);
+}
+
+.complexity-chart {
+    height: 250px;
+    display: flex;
+    align-items: flex-end;
+    gap: 15px;
+    margin-top: 30px;
+    padding: 20px 0;
+}
+
+.bar {
+    flex: 1;
+    border-radius: 20px 20px 0 0;
+    position: relative;
+    transition: var(--transition);
+    background: linear-gradient(to top, var(--primary), var(--wtf-pink));
+    box-shadow: 0 0 20px var(--primary);
+    animation: grow 2s infinite alternate;
+}
+
+@keyframes grow {
+    0% { height: 30%; }
+    100% { height: 100%; }
+}
+
+.bar:hover {
+    opacity: 1;
+    transform: scale(1.1);
+    box-shadow: 0 0 40px var(--accent);
+    animation: none;
+}
+
+.bar-label {
+    position: absolute;
+    bottom: -40px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-shadow: 0 0 5px var(--secondary);
+}
+
+.bar-value {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-weight: 900;
+    color: var(--accent);
+    text-shadow: 0 0 10px var(--accent);
+    font-size: 24px;
+}
+
+footer {
+    text-align: center;
+    margin-top: 70px;
+    padding: 40px;
+    color: var(--text-secondary);
+    font-size: 24px;
+    background: rgba(10, 0, 24, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 50px 0;
+    border: 3px dashed var(--wtf-blue);
+    position: relative;
+    animation: spinFooter 20s linear infinite;
+}
+
+@keyframes spinFooter {
+    100% { transform: rotate(360deg); }
+}
+
+footer::before {
+    content: "WTF?!";
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    color: black;
+    padding: 10px 50px;
+    border-radius: 50px;
+    font-weight: 900;
+    font-size: 28px;
+    box-shadow: 0 5px 30px var(--primary);
+}
+
+::-webkit-scrollbar {
+    width: 20px;
+    height: 20px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+    border-radius: 10px;
+    box-shadow: inset 0 0 10px var(--primary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--primary), var(--secondary));
+    border-radius: 10px;
+    border: 4px solid var(--bg-secondary);
+    box-shadow: 0 0 20px var(--accent);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, var(--wtf-pink), var(--wtf-blue));
+}
+
+@media (max-width: 1000px) {
+    .main-content {
+        grid-template-columns: 1fr;
+    }
+
+    header {
+        flex-direction: column;
+        gap: 30px;
+        text-align: center;
+    }
+
+    .logo {
+        justify-content: center;
+    }
+
+    nav ul {
+        justify-content: center;
+    }
+
+    .properties-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+}
+
+/* ==================== */
+/* CATALOG PAGE STYLES */
+/* ==================== */
+
+.page-title {
+    font-size: 72px;
+    margin-bottom: 50px;
+    text-align: center;
+    background: linear-gradient(90deg, var(--primary), var(--wtf-green), var(--wtf-blue), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding-bottom: 20px;
+    border-bottom: 4px wavy var(--wtf-pink);
+    font-family: var(--wtf-font);
+    letter-spacing: -5px;
+    text-shadow: 0 0 30px var(--secondary);
+    animation: titleGlitch 2s infinite;
+}
+
+@keyframes titleGlitch {
+    0% { transform: skew(0); }
+    20% { transform: skew(20deg); }
+    40% { transform: skew(-20deg); }
+    60% { transform: scale(1.1); }
+    80% { transform: scale(0.9); }
+    100% { transform: rotate(5deg); }
+}
+
+.algorithms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 40px;
+    margin-top: 40px;
+}
+
+.algo-card {
+    display: block;
+    background: rgba(10, 0, 24, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 40px 10px;
+    box-shadow:
+        0 0 20px var(--primary),
+        0 0 40px var(--secondary);
+    padding: 40px 30px;
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: var(--transition);
+    height: 100%;
+    border: 3px dotted var(--wtf-blue);
+    position: relative;
+    overflow: hidden;
+    animation: cardFloat 3s infinite alternate;
+}
+
+@keyframes cardFloat {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-30px); }
+}
+
+.algo-card:hover {
+    transform: rotate(10deg) scale(1.1);
+    box-shadow:
+        0 0 50px var(--primary),
+        0 0 100px var(--secondary);
+    border: 3px solid var(--accent);
+    animation: none;
+    z-index: 100;
+}
+
+.algo-card:hover .algo-icon {
+    transform: scale(1.5) rotate(360deg);
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    box-shadow: 0 0 50px var(--wtf-green);
+}
+
+.algo-icon {
+    width: 100px;
+    height: 100px;
+    border-radius: 50% 20% 50% 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-tertiary);
+    margin: 0 auto 30px;
+    transition: var(--transition);
+    color: var(--wtf-pink);
+    font-size: 48px;
+    border: 3px solid var(--wtf-blue);
+    box-shadow: 0 0 30px var(--primary);
+    animation: spin 10s linear infinite;
+}
+
+.algo-card h3 {
+    font-size: 36px;
+    margin-bottom: 25px;
+    color: var(--text-primary);
+    transition: var(--transition);
+    text-align: center;
+    text-transform: uppercase;
+    text-shadow: 0 0 10px var(--wtf-green);
+}
+
+.algo-card:hover h3 {
+    color: var(--accent);
+    text-shadow: 0 0 20px var(--accent);
+}
+
+.algo-card p {
+    color: var(--text-secondary);
+    margin-bottom: 30px;
+    min-height: 100px;
+    font-size: 24px;
+    line-height: 1.6;
+    text-align: center;
+}
+
+.algo-meta {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.complexity {
+    background: rgba(255, 0, 255, 0.3);
+    color: var(--primary-light);
+    padding: 15px 30px;
+    border-radius: 50px;
+    font-size: 20px;
+    font-weight: 800;
+    border: 2px solid var(--primary);
+    animation: blink 1s infinite alternate;
+}
+
+.category {
+    background: rgba(0, 255, 255, 0.3);
+    color: var(--secondary);
+    padding: 15px 30px;
+    border-radius: 50px;
+    font-size: 20px;
+    font-weight: 800;
+    transition: var(--transition);
+    border: 2px solid var(--secondary);
+    animation: blink 1s infinite alternate-reverse;
+}
+
+.algo-card:hover .category {
+    background: rgba(0, 255, 255, 0.6);
+    transform: rotate(-15deg) scale(1.2);
+    box-shadow: 0 0 30px var(--secondary);
+}
+
+/* Animation for cards */
+@keyframes cardAppear {
+    from {
+        opacity: 0;
+        transform: translateY(100px) rotate(180deg);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) rotate(0);
+    }
+}
+
+.algo-card {
+    animation: cardAppear 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+    animation-fill-mode: backwards;
+}
+
+/* Delay for each card */
+.algorithms-grid .algo-card:nth-child(1) { animation-delay: 0.1s; }
+.algorithms-grid .algo-card:nth-child(2) { animation-delay: 0.2s; }
+.algorithms-grid .algo-card:nth-child(3) { animation-delay: 0.3s; }
+.algorithms-grid .algo-card:nth-child(4) { animation-delay: 0.4s; }
+.algorithms-grid .algo-card:nth-child(5) { animation-delay: 0.5s; }
+.algorithms-grid .algo-card:nth-child(6) { animation-delay: 0.6s; }
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Floating WTF elements */
+.wtf-element {
+    position: fixed;
+    z-index: 9999;
+    font-size: 60px;
+    animation: wtfFloat 5s infinite alternate;
+    pointer-events: none;
+    opacity: 0.3;
+    text-shadow: 0 0 20px currentColor;
+}
+
+@keyframes wtfFloat {
+    0% { transform: translate(0, 0) rotate(0); }
+    25% { transform: translate(100px, -50px) rotate(90deg); }
+    50% { transform: translate(50px, 100px) rotate(180deg); }
+    75% { transform: translate(-100px, -30px) rotate(270deg); }
+    100% { transform: translate(-50px, 50px) rotate(360deg); }
+}
+
+.wtf-element:nth-child(1) { top: 10%; left: 10%; color: var(--primary); animation-delay: 0s; }
+.wtf-element:nth-child(2) { top: 20%; right: 10%; color: var(--secondary); animation-delay: 1s; }
+.wtf-element:nth-child(3) { bottom: 30%; left: 20%; color: var(--accent); animation-delay: 2s; }
+.wtf-element:nth-child(4) { bottom: 10%; right: 20%; color: var(--wtf-green); animation-delay: 3s; }

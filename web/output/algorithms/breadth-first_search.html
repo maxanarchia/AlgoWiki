@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prova | AlgoWiki</title>
+    <title>Breadth-First Search | AlgoWiki</title>
     <link rel="stylesheet" href="../assets/css/dark.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -30,8 +30,8 @@
 <div class="main-content">
     <div class="algorithm-card">
         <div class="card-header">
-            <h2>Prova</h2>
-            <p>A logarithmic-time search algorithm for sorted arrays.</p>
+            <h2>Breadth-First Search</h2>
+            <p>A graph traversal algorithm that explores vertices in layers.</p>
         </div>
 
         <div class="card-body">
@@ -40,22 +40,22 @@
                 <div class="property-card">
                     <i class="fas fas fa-clock"></i>
                     <h3>Time Complexity</h3>
-                    <p>O(log n)</p>
-                    <span class="badge badge-time">Very Fast</span>
+                    <p>O(V + E)</p>
+                    <span class="badge badge-time">?</span>
                 </div>
                 
                 <div class="property-card">
                     <i class="fas fas fa-memory"></i>
                     <h3>Space Complexity</h3>
-                    <p>O(1)</p>
-                    <span class="badge badge-space">Immediate</span>
+                    <p>O(V)</p>
+                    <span class="badge badge-space">?</span>
                 </div>
                 
                 <div class="property-card">
                     <i class="fas fas fa-exchange-alt"></i>
                     <h3>In-Place</h3>
-                    <p>Yes</p>
-                    <span class="badge badge-inplace">Yes</span>
+                    <p>No</p>
+                    <span class="badge badge-inplace">No</span>
                 </div>
                 
                 <div class="property-card">
@@ -68,35 +68,36 @@
                 <div class="property-card">
                     <i class="fas fas fa-brain"></i>
                     <h3>Difficulty</h3>
-                    <p>Very Easy</p>
-                    <span class="badge badge-difficulty">★☆☆☆☆</span>
+                    <p>Medium</p>
+                    <span class="badge badge-difficulty">★★★☆☆</span>
                 </div>
                 
             </div>
 
             <h3 class="section-title"><i class="fas fa-book-open"></i> Description</h3>
             <div class="description">
-                <p>Binary Search is an efficient algorithm for finding an element in a <strong>sorted array</strong>.</p>
-<p>It works by repeatedly dividing the search interval in half:</p> <ol> <li>Compare the target with the middle element</li> <li>If equal, return the index</li> <li>If less, repeat on the left half</li> <li>If greater, repeat on the right half</li> </ol>
-<p>It is extremely fast with a time complexity of <code>O(log n)</code> but only applicable to sorted collections.</p>
+                <p>Breadth-First Search (BFS) is a graph traversal algorithm that explores all neighbors of a vertex before moving to the next level.</p>
+<p>It uses a queue to keep track of the next vertex to visit, making it ideal for finding the shortest path in unweighted graphs.</p>
+<p>Steps:</p> <ol> <li>Start from a source vertex</li> <li>Visit all its neighbors</li> <li>Then visit the neighbors’ neighbors, and so on</li> </ol>
+<p>BFS guarantees the shortest path in terms of the number of edges in unweighted graphs.</p>
             </div>
 
             <h3 class="section-title"><i class="fas fa-chart-line"></i> Computational Complexity</h3>
             <div class="complexity-chart">
                 <div class="bar" style="height: 40%; background: #4cc9f0;">
-                    <div class="bar-value">O(1)</div>
+                    <div class="bar-value">O(V + E)</div>
                     <div class="bar-label">Best</div>
                 </div>
                 <div class="bar" style="height: 70%; background: #4361ee;">
-                    <div class="bar-value">O(log n)</div>
+                    <div class="bar-value">O(V + E)</div>
                     <div class="bar-label">Average</div>
                 </div>
                 <div class="bar" style="height: 100%; background: #3a0ca3;">
-                    <div class="bar-value">O(log n)</div>
+                    <div class="bar-value">O(V + E)</div>
                     <div class="bar-label">Worst</div>
                 </div>
                 <div class="bar" style="height: 70%; background: #f72585;">
-                    <div class="bar-value">O(1)</div>
+                    <div class="bar-value">O(V)</div>
                     <div class="bar-label">Spatial</div>
                 </div>
             </div>
@@ -158,8 +159,14 @@
             </span>
         
             <span class="tag">
-                <a href="../categories/divide and conquer.html">
-                    Divide And Conquer
+                <a href="../categories/graphs.html">
+                    Graphs
+                </a>
+            </span>
+        
+            <span class="tag">
+                <a href="../categories/traversal.html">
+                    Traversal
                 </a>
             </span>
         
@@ -167,16 +174,16 @@
 </div>
         <div class="sidebar-card">
     <h3><i class="fas fa-info-circle"></i> Curiosities</h3>
-    <p>Binary search is deceptively simple but easy to get wrong when implemented manually; many historical bugs arose from incorrect mid-point calculations.</p>
+    <p>BFS is often used in AI, network analysis, and solving puzzles like the Rubik’s Cube.</p>
     <div class="property-card" style="margin-top: 15px; text-align: center;">
 
         <h3>Creation Year</h3>
-        <p>1946</p>
+        <p>1959</p>
     </div>
     <div class="property-card" style="margin-top: 15px; text-align: center;">
 
         <h3>Author</h3>
-        <p>John Mauchly</p>
+        <p>Edward F. Moore</p>
     </div>
 </div>
     </div>

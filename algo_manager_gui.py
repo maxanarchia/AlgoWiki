@@ -1,3 +1,4 @@
+import logging
 import customtkinter as ctk
 from tkinter import messagebox, scrolledtext
 from pathlib import Path
@@ -6,6 +7,9 @@ import yaml
 import subprocess
 import re
 import os
+import sqlite3
+from collections import defaultdict
+import sys
 
 # Set modern theme
 ctk.set_appearance_mode("dark")
@@ -13,7 +17,8 @@ ctk.set_default_color_theme("blue")
 
 # Paths
 BASE_DIR = Path(__file__).resolve().parent
-ALGOS_DIR = BASE_DIR / 'core' / 'algorithms'
+CORE_DIR = BASE_DIR / 'core'
+DB_PATH = CORE_DIR / 'algo_wiki.db'
 GENERATOR_SCRIPT = BASE_DIR / 'web' / 'generate_website.py'
 
 
@@ -24,6 +29,11 @@ class AlgorithmManager(ctk.CTk):
         self.geometry("1100x800")
         self.grid_columnconfigure(1, weight=1)
         self.grid_rowconfigure(0, weight=1)
+
+        # Database connection
+        self.conn = sqlite3.connect(DB_PATH)
+        self.conn.row_factory = sqlite3.Row
+        self.cursor = self.conn.cursor()
 
         # Left sidebar
         self.sidebar = ctk.CTkFrame(self, width=200, corner_radius=0)
@@ -61,6 +71,21 @@ class AlgorithmManager(ctk.CTk):
             command=self.on_publish
         )
         self.publish_button.grid(row=4, column=0, padx=20, pady=10)
+
+        # Aggiungi un pulsante nella GUI
+        self.impl_button = ctk.CTkButton(
+            self.sidebar,
+            text="Open Implementations",
+            command=self.open_implementations_folder
+        )
+        self.impl_button.grid(row=5, column=0, padx=20, pady=10)
+
+        self.sync_button = ctk.CTkButton(
+            self.sidebar,
+            text="Sync Implementations",
+            command=self.sync_implementations
+        )
+        self.sync_button.grid(row=6, column=0, padx=20, pady=10)
 
         # Algorithm list
         self.list_frame = ctk.CTkFrame(self.sidebar)
@@ -189,7 +214,7 @@ class AlgorithmManager(ctk.CTk):
         self.save_button.grid(row=1, column=1, padx=20, pady=20, sticky="e")
 
         # Initialize
-        self.current_algo = None
+        self.current_algo_id = None
         self.refresh_list()
 
     def slugify(self, name: str) -> str:
@@ -198,35 +223,151 @@ class AlgorithmManager(ctk.CTk):
         slug = re.sub(r"[^a-z0-9_]+", "", slug)
         return slug
 
-    def load_metadata(self, algo_id: str) -> dict:
-        meta_file = ALGOS_DIR / algo_id / 'metadata.yml'
-        if meta_file.exists():
-            with meta_file.open('r', encoding='utf-8') as f:
-                return yaml.safe_load(f) or {}
-        return {}
+    def load_algorithm(self, algo_id: int) -> dict:
+        """Load algorithm data from database by ID"""
+        try:
+            # Load algorithm metadata
+            self.cursor.execute("SELECT * FROM algorithms WHERE id = ?", (algo_id,))
+            algo_data = dict(self.cursor.fetchone())
 
-    def save_metadata(self, algo_id: str, data: dict):
-        folder = ALGOS_DIR / algo_id
-        folder.mkdir(parents=True, exist_ok=True)
-        meta_file = folder / 'metadata.yml'
-        with meta_file.open('w', encoding='utf-8') as f:
-            yaml.dump(data, f, sort_keys=False, allow_unicode=True)
+            # Load categories
+            self.cursor.execute("""
+                SELECT c.name 
+                FROM categories c
+                JOIN algorithm_category ac ON c.id = ac.category_id
+                WHERE ac.algorithm_id = ?
+            """, (algo_id,))
+            categories = [row[0] for row in self.cursor.fetchall()]
+            algo_data['categories'] = categories
+
+            return algo_data
+        except Exception as e:
+            messagebox.showerror("Database Error", f"Failed to load algorithm: {str(e)}")
+            return {}
+
+    def save_algorithm(self, algo_id: int, data: dict):
+        """Save algorithm data to database"""
+        try:
+            # Start transaction
+            self.cursor.execute("BEGIN TRANSACTION")
+
+            # Update algorithm metadata
+            self.cursor.execute("""
+                UPDATE algorithms SET
+                    name = ?,
+                    description = ?,
+                    long_description = ?,
+                    curiosities = ?,
+                    year = ?,
+                    author = ?,
+                    best_time = ?,
+                    avg_time = ?,
+                    worst_time = ?,
+                    space = ?,
+                    stability = ?,
+                    inplace = ?,
+                    difficulty = ?
+                WHERE id = ?
+            """, (
+                data['name'],
+                data['description'],
+                data['long_description'],
+                data['curiosities'],
+                data['year'],
+                data['author'],
+                data['best_time'],
+                data['avg_time'],
+                data['worst_time'],
+                data['space'],
+                data['stability'],
+                data['inplace'],
+                data['difficulty'],
+                algo_id
+            ))
+
+            # Update categories
+            # First, remove existing categories
+            self.cursor.execute("DELETE FROM algorithm_category WHERE algorithm_id = ?", (algo_id,))
+
+            # Then add new categories
+            for category in data['categories']:
+                # Ensure category exists
+                self.cursor.execute("INSERT OR IGNORE INTO categories (name) VALUES (?)", (category.lower(),))
+
+                # Get category ID
+                self.cursor.execute("SELECT id FROM categories WHERE name = ?", (category.lower(),))
+                cat_id = self.cursor.fetchone()[0]
+
+                # Link to algorithm
+                self.cursor.execute(
+                    "INSERT OR IGNORE INTO algorithm_category (algorithm_id, category_id) VALUES (?, ?)",
+                    (algo_id, cat_id)
+                )
+
+            # Commit transaction
+            self.conn.commit()
+            return True
+        except Exception as e:
+            self.conn.rollback()
+            messagebox.showerror("Database Error", f"Failed to save algorithm: {str(e)}")
+            return False
+
+    def create_algorithm(self, name: str) -> int:
+        """Create a new algorithm in the database and return its ID"""
+        try:
+            slug = self.slugify(name)
+            self.cursor.execute("""
+                INSERT INTO algorithms (
+                    name, slug, description, long_description, curiosities,
+                    year, author, best_time, avg_time, worst_time, space,
+                    stability, inplace, difficulty
+                ) VALUES (?, ?, '', '', '', NULL, '', '', '', '', '', 0, 0, 0)
+            """, (name, slug))
+            algo_id = self.cursor.lastrowid
+            self.conn.commit()
+            return algo_id
+        except Exception as e:
+            self.conn.rollback()
+            messagebox.showerror("Database Error", f"Failed to create algorithm: {str(e)}")
+            return None
+
+    def delete_algorithm(self, algo_id: int):
+        """Delete an algorithm and its related data from the database"""
+        try:
+            # Delete implementations first due to foreign key constraints
+            self.cursor.execute("DELETE FROM implementations WHERE algorithm_id = ?", (algo_id,))
+
+            # Delete category associations
+            self.cursor.execute("DELETE FROM algorithm_category WHERE algorithm_id = ?", (algo_id,))
+
+            # Delete the algorithm
+            self.cursor.execute("DELETE FROM algorithms WHERE id = ?", (algo_id,))
+
+            self.conn.commit()
+            return True
+        except Exception as e:
+            self.conn.rollback()
+            messagebox.showerror("Database Error", f"Failed to delete algorithm: {str(e)}")
+            return False
 
     def refresh_list(self):
+        """Refresh the algorithm list from the database"""
         # Clear existing buttons
         for widget in self.scrollable_list.winfo_children():
             widget.destroy()
 
         # Create new buttons
         self.algorithm_buttons = {}
-        algorithms = sorted([p.name for p in ALGOS_DIR.iterdir() if p.is_dir()])
+        self.cursor.execute("SELECT id, name FROM algorithms ORDER BY name")
+        algorithms = self.cursor.fetchall()
 
-        for i, algo_id in enumerate(algorithms):
+        for i, row in enumerate(algorithms):
+            algo_id, name = row
             btn = ctk.CTkButton(
                 self.scrollable_list,
-                text=algo_id,
+                text=name,
                 anchor="w",
-                command=lambda a=algo_id: self.on_select(a)
+                command=lambda id=algo_id: self.on_select(id)
             )
             btn.grid(row=i, column=0, padx=10, pady=5, sticky="ew")
             self.algorithm_buttons[algo_id] = btn
@@ -241,60 +382,24 @@ class AlgorithmManager(ctk.CTk):
         if not name:
             return
 
-        algo_id = self.slugify(name)
-        if (ALGOS_DIR / algo_id).exists():
-            messagebox.showerror("Error", f"Algorithm '{algo_id}' already exists.")
-            return
-
-        # Scaffold minimal metadata with new structure
-        data = {
-            'id': algo_id,
-            'name': name,
-            'description': '',
-            'categories': [],
-            'long_description': '',
-            'curiosities': '',
-            'year': '',
-            'author': '',
-            'best_time': '',
-            'avg_time': '',
-            'worst_time': '',
-            'space': '',
-            'stability': '1',
-            'inplace': '1',
-            'difficulty': '3'
-        }
-
-        # Save metadata and create folder structure
-        self.save_metadata(algo_id, data)
-
-        # Create implementations folder
-        impl_dir = ALGOS_DIR / algo_id / 'implementations'
-        impl_dir.mkdir(exist_ok=True, parents=True)
-
-        # Add README.md in implementations folder
-        readme_path = impl_dir / 'README.md'
-        with readme_path.open('w', encoding='utf-8') as f:
-            f.write(f"# Implementations for {name}\n\n")
-            f.write("Add algorithm implementations in various programming languages here.\n\n")
-            f.write("Files should be named using the pattern: `algorithm_name.extension`\n")
-            f.write("Example: `bubble_sort.py`, `bubble_sort.js`, etc.\n")
-
-        self.refresh_list()
-        self.on_select(algo_id)
+        algo_id = self.create_algorithm(name)
+        if algo_id:
+            self.refresh_list()
+            self.on_select(algo_id)
 
     def on_delete(self):
-        if not self.current_algo:
+        if not self.current_algo_id:
             return
 
+        algo_name = self.name_entry.get()
         if messagebox.askyesno(
                 "Delete",
-                f"Delete algorithm '{self.current_algo}'? This cannot be undone."
+                f"Delete algorithm '{algo_name}'? This cannot be undone."
         ):
-            shutil.rmtree(ALGOS_DIR / self.current_algo)
-            self.refresh_list()
-            self.clear_form()
-            self.current_algo = None
+            if self.delete_algorithm(self.current_algo_id):
+                self.refresh_list()
+                self.clear_form()
+                self.current_algo_id = None
 
     def on_publish(self):
         subprocess.run(["python", str(GENERATOR_SCRIPT)])
@@ -317,11 +422,11 @@ class AlgorithmManager(ctk.CTk):
             self.complexity_widgets[field].delete(0, "end")
 
     def on_select(self, algo_id):
-        self.current_algo = algo_id
-        data = self.load_metadata(algo_id)
+        self.current_algo_id = algo_id
+        data = self.load_algorithm(algo_id)
 
         # Update UI
-        self.id_value.configure(text=algo_id)
+        self.id_value.configure(text=str(algo_id))
         self.name_entry.delete(0, "end")
         self.name_entry.insert(0, data.get('name', ''))
 
@@ -346,7 +451,7 @@ class AlgorithmManager(ctk.CTk):
         # Update properties fields
         for prop_type in self.prop_widgets:
             self.prop_widgets[prop_type].delete(0, "end")
-            self.prop_widgets[prop_type].insert(0, data.get(prop_type, ''))
+            self.prop_widgets[prop_type].insert(0, str(data.get(prop_type, '')))
 
         # Update complexity fields
         for field in self.complexity_widgets:
@@ -354,31 +459,88 @@ class AlgorithmManager(ctk.CTk):
             self.complexity_widgets[field].insert(0, data.get(field, ''))
 
     def on_save(self):
-        if not self.current_algo:
+        if not self.current_algo_id:
             return
 
         data = {
-            'id': self.current_algo,
             'name': self.name_entry.get(),
             'description': self.desc_text.get("1.0", "end").strip(),
             'categories': [c.strip() for c in self.cat_entry.get().split(',') if c.strip()],
             'long_description': self.long_desc_text.get("1.0", "end").strip(),
             'curiosities': self.curiosities_text.get("1.0", "end").strip(),
-            'year': int(self.year_entry.get()) if self.year_entry.get().isdigit() else '',
+            'year': int(self.year_entry.get()) if self.year_entry.get().isdigit() else None,
             'author': self.author_entry.get(),
         }
 
         # Add properties
         for prop_type in self.prop_widgets:
-            data[prop_type] = self.prop_widgets[prop_type].get()
+            data[prop_type] = int(self.prop_widgets[prop_type].get()) if self.prop_widgets[
+                prop_type].get().isdigit() else 0
 
         # Add complexity fields
         for field in self.complexity_widgets:
             data[field] = self.complexity_widgets[field].get()
 
-        self.save_metadata(self.current_algo, data)
-        messagebox.showinfo("Saved", f"Metadata for '{self.current_algo}' saved.")
-        self.refresh_list()
+        if self.save_algorithm(self.current_algo_id, data):
+            messagebox.showinfo("Saved", f"Algorithm '{data['name']}' saved successfully.")
+            self.refresh_list()
+
+    # Aggiungi questo metodo alla tua classe AlgorithmManager
+    def open_implementations_folder(self):
+        if not self.current_algo_id:
+            return
+
+        # Trova la cartella delle implementazioni
+        self.cursor.execute("SELECT slug FROM algorithms WHERE id = ?", (self.current_algo_id,))
+        slug = self.cursor.fetchone()[0]
+        impl_dir = CORE_DIR / 'algorithms' / slug / 'implementations'
+
+        # Crea la cartella se non esiste
+        impl_dir.mkdir(parents=True, exist_ok=True)
+
+        # Apri la cartella nel file manager del sistema
+        try:
+            if os.name == 'nt':  # Windows
+                os.startfile(impl_dir)
+            elif os.name == 'posix':  # macOS, Linux
+                subprocess.run(['open' if sys.platform == 'darwin' else 'xdg-open', str(impl_dir)])
+        except Exception as e:
+            messagebox.showerror("Error", f"Could not open folder: {str(e)}")
+
+    def sync_implementations(self):
+        if not self.current_algo_id:
+            return
+
+        self.cursor.execute("SELECT slug FROM algorithms WHERE id = ?", (self.current_algo_id,))
+        slug = self.cursor.fetchone()[0]
+        impl_dir = CORE_DIR / 'algorithms' / slug / 'implementations'
+
+        # Leggi tutti i file nella cartella
+        for file in impl_dir.glob('*'):
+            if file.is_file():
+                lang = file.suffix[1:]  # .py -> py
+                if lang not in ['c', 'cpp', 'py']:  # Estendi se necessario
+                    continue
+
+                try:
+                    with open(file, 'r', encoding='utf-8') as f:
+                        code = f.read()
+
+                    # Salva nel database
+                    self.cursor.execute("""
+                        INSERT OR REPLACE INTO implementations (algorithm_id, language, code)
+                        VALUES (?, ?, ?)
+                    """, (self.current_algo_id, lang, code))
+                    self.conn.commit()
+                except Exception as e:
+                    logging.error(f"Error syncing {file.name}: {str(e)}")
+
+        messagebox.showinfo("Synced", "Implementations synchronized with database")
+
+    def __del__(self):
+        """Close database connection when the app is destroyed"""
+        if hasattr(self, 'conn') and self.conn:
+            self.conn.close()
 
 
 if __name__ == '__main__':

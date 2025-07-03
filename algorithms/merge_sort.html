@@ -68,8 +68,8 @@
                 <div class="property-card">
                     <i class="fas fas fa-brain"></i>
                     <h3>Difficulty</h3>
-                    <p>Medium</p>
-                    <span class="badge badge-difficulty">★★★☆☆</span>
+                    <p>Hard</p>
+                    <span class="badge badge-difficulty">★★★★☆</span>
                 </div>
                 
             </div>
@@ -106,12 +106,12 @@
             <h3 class="section-title"><i class="fas fa-code"></i> Implementation</h3>
             <div class="tabs">
                 
-                <div class="tab active" data-lang="c">
-                    C
+                <div class="tab active" data-lang="python">
+                    PYTHON
                 </div>
                 
-                <div class="tab " data-lang="py">
-                    PY
+                <div class="tab " data-lang="c">
+                    C
                 </div>
                 
                 <div class="tab " data-lang="cpp">
@@ -121,7 +121,50 @@
             </div>
 
             
-            <div class="code-container active" id="code-c">
+            <div class="code-container active" id="code-python">
+                <div class="code-header">
+                    <span>merge_sort.python</span>
+                    <button class="copy-btn" data-target="code-python">Copy Code <i class="fas fa-copy"></i></button>
+                </div>
+                <pre><code class="language-python">def merge_sort(arr):
+    if len(arr) > 1:
+        mid = len(arr) // 2
+        left_half = arr[:mid]
+        right_half = arr[mid:]
+
+        merge_sort(left_half)
+        merge_sort(right_half)
+
+        i = j = k = 0
+
+        while i < len(left_half) and j < len(right_half):
+            if left_half[i] < right_half[j]:
+                arr[k] = left_half[i]
+                i += 1
+            else:
+                arr[k] = right_half[j]
+                j += 1
+            k += 1
+
+        while i < len(left_half):
+            arr[k] = left_half[i]
+            i += 1
+            k += 1
+
+        while j < len(right_half):
+            arr[k] = right_half[j]
+            j += 1
+            k += 1
+
+
+# Esempio di utilizzo
+arr = [12, 11, 13, 5, 6, 7]
+print("Array originale:", arr)
+merge_sort(arr)
+print("Array ordinato:", arr)</code></pre>
+            </div>
+            
+            <div class="code-container " id="code-c">
                 <div class="code-header">
                     <span>merge_sort.c</span>
                     <button class="copy-btn" data-target="code-c">Copy Code <i class="fas fa-copy"></i></button>
@@ -192,49 +235,6 @@ int main() {
         printf("%d ", arr[i]);
     return 0;
 }</code></pre>
-            </div>
-            
-            <div class="code-container " id="code-py">
-                <div class="code-header">
-                    <span>merge_sort.py</span>
-                    <button class="copy-btn" data-target="code-py">Copy Code <i class="fas fa-copy"></i></button>
-                </div>
-                <pre><code class="language-py">def merge_sort(arr):
-    if len(arr) > 1:
-        mid = len(arr) // 2
-        left_half = arr[:mid]
-        right_half = arr[mid:]
-
-        merge_sort(left_half)
-        merge_sort(right_half)
-
-        i = j = k = 0
-
-        while i < len(left_half) and j < len(right_half):
-            if left_half[i] < right_half[j]:
-                arr[k] = left_half[i]
-                i += 1
-            else:
-                arr[k] = right_half[j]
-                j += 1
-            k += 1
-
-        while i < len(left_half):
-            arr[k] = left_half[i]
-            i += 1
-            k += 1
-
-        while j < len(right_half):
-            arr[k] = right_half[j]
-            j += 1
-            k += 1
-
-
-# Esempio di utilizzo
-arr = [12, 11, 13, 5, 6, 7]
-print("Array originale:", arr)
-merge_sort(arr)
-print("Array ordinato:", arr)</code></pre>
             </div>
             
             <div class="code-container " id="code-cpp">

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dijkstra'S Algorithm | AlgoWiki</title>
+    <title>Breadth-First Search | AlgoWiki</title>
     <link rel="stylesheet" href="../assets/css/dark.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -30,8 +30,8 @@
 <div class="main-content">
     <div class="algorithm-card">
         <div class="card-header">
-            <h2>Dijkstra'S Algorithm</h2>
-            <p>A graph algorithm to find the shortest path from a source to all other vertices.</p>
+            <h2>Breadth-First Search</h2>
+            <p>A graph traversal algorithm that explores vertices in layers.</p>
         </div>
 
         <div class="card-body">
@@ -40,7 +40,7 @@
                 <div class="property-card">
                     <i class="fas fas fa-clock"></i>
                     <h3>Time Complexity</h3>
-                    <p>O(V + E log V)</p>
+                    <p>O(V + E)</p>
                     <span class="badge badge-time">?</span>
                 </div>
                 
@@ -68,32 +68,32 @@
                 <div class="property-card">
                     <i class="fas fas fa-brain"></i>
                     <h3>Difficulty</h3>
-                    <p>Hard</p>
-                    <span class="badge badge-difficulty">★★★★☆</span>
+                    <p>Medium</p>
+                    <span class="badge badge-difficulty">★★★☆☆</span>
                 </div>
                 
             </div>
 
             <h3 class="section-title"><i class="fas fa-book-open"></i> Description</h3>
             <div class="description">
-                <p>Dijkstra's algorithm solves the single-source shortest path problem for graphs with non-negative edge weights.</p>
-<p>It maintains a set of vertices with known shortest distances and iteratively expands this set using a greedy approach.</p>
-<p>Steps:</p> <ol> <li>Initialize distances and priority queue</li> <li>Pick the vertex with the smallest tentative distance</li> <li>Update distances to its neighbors</li> <li>Repeat until all vertices are processed</li> </ol>
-<p>Using a priority queue (e.g., a min-heap) makes the algorithm more efficient on sparse graphs.</p>
+                <p>Breadth-First Search (BFS) is a graph traversal algorithm that explores all neighbors of a vertex before moving to the next level.</p>
+<p>It uses a queue to keep track of the next vertex to visit, making it ideal for finding the shortest path in unweighted graphs.</p>
+<p>Steps:</p> <ol> <li>Start from a source vertex</li> <li>Visit all its neighbors</li> <li>Then visit the neighbors’ neighbors, and so on</li> </ol>
+<p>BFS guarantees the shortest path in terms of the number of edges in unweighted graphs.</p>
             </div>
 
             <h3 class="section-title"><i class="fas fa-chart-line"></i> Computational Complexity</h3>
             <div class="complexity-chart">
                 <div class="bar" style="height: 40%; background: #4cc9f0;">
-                    <div class="bar-value">O(V + E log V)</div>
+                    <div class="bar-value">O(V + E)</div>
                     <div class="bar-label">Best</div>
                 </div>
                 <div class="bar" style="height: 70%; background: #4361ee;">
-                    <div class="bar-value">O(V + E log V)</div>
+                    <div class="bar-value">O(V + E)</div>
                     <div class="bar-label">Average</div>
                 </div>
                 <div class="bar" style="height: 100%; background: #3a0ca3;">
-                    <div class="bar-value">O(V^2)</div>
+                    <div class="bar-value">O(V + E)</div>
                     <div class="bar-label">Worst</div>
                 </div>
                 <div class="bar" style="height: 70%; background: #f72585;">
@@ -153,20 +153,20 @@
     <div class="tag-list">
         
             <span class="tag">
+                <a href="../categories/search.html">
+                    Search
+                </a>
+            </span>
+        
+            <span class="tag">
                 <a href="../categories/graphs.html">
                     Graphs
                 </a>
             </span>
         
             <span class="tag">
-                <a href="../categories/shortest path.html">
-                    Shortest Path
-                </a>
-            </span>
-        
-            <span class="tag">
-                <a href="../categories/greedy.html">
-                    Greedy
+                <a href="../categories/traversal.html">
+                    Traversal
                 </a>
             </span>
         
@@ -174,16 +174,16 @@
 </div>
         <div class="sidebar-card">
     <h3><i class="fas fa-info-circle"></i> Curiosities</h3>
-    <p>Edsger Dijkstra developed this algorithm while trying to compute the shortest route from Rotterdam to Groningen.</p>
+    <p>BFS is often used in AI, network analysis, and solving puzzles like the Rubik’s Cube.</p>
     <div class="property-card" style="margin-top: 15px; text-align: center;">
 
         <h3>Creation Year</h3>
-        <p>1956</p>
+        <p>1959</p>
     </div>
     <div class="property-card" style="margin-top: 15px; text-align: center;">
 
         <h3>Author</h3>
-        <p>Edsger Dijkstra</p>
+        <p>Edward F. Moore</p>
     </div>
 </div>
     </div>
